@@ -20,6 +20,7 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,
         title: Text(widget.title),
+        actions: _buildActions(context),
       ),
       body: Center(
         child: Column(
@@ -29,6 +30,18 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
       ),
     );
   }
+}
+
+List<Widget> _buildActions(context) {
+  return [
+    IconButton(
+      icon: const Icon(Icons.history),
+      tooltip: "History",
+      onPressed: () {
+        Navigator.pushNamed(context, historyRouteName);
+      },
+    ),
+  ];
 }
 
 class NumberInput extends StatefulWidget {
