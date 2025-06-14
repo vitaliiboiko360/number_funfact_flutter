@@ -66,7 +66,17 @@ class _NumberInputState extends State<NumberInput> {
         ),
         TextButton.icon(
           onPressed: () {
-            if (textInputController.text != '') {}
+            if (textInputController.text == '') {
+              return;
+            }
+            var number = int.tryParse(textInputController.text);
+            if (number != null) {
+              Navigator.pushNamed(
+                context,
+                numberDetailsRouteName,
+                arguments: {number: number},
+              );
+            }
           },
           icon: const Icon(Icons.search),
           label: const Text(''),
