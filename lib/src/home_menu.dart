@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:number_funfact_flutter/src/number_details.dart';
 import 'package:number_funfact_flutter/src/routes/routes.dart';
 
 class HomeMenuPage extends StatefulWidget {
@@ -56,6 +57,7 @@ class _NumberInputState extends State<NumberInput> {
         SizedBox(
           width: 200,
           child: TextField(
+            controller: textInputController,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
@@ -74,7 +76,7 @@ class _NumberInputState extends State<NumberInput> {
               Navigator.pushNamed(
                 context,
                 numberDetailsRouteName,
-                arguments: {number: number},
+                arguments: NumberDetailsArguments(number),
               );
             }
           },

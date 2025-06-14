@@ -5,6 +5,6 @@ const numberDetailsRouteName = '/number_details';
 
 final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
   numberDetailsRouteName: (BuildContext context) {
-    return NumberDetailsPage();
+    return ExtractArgumentsForNumberDetailsPage();
   },
 };

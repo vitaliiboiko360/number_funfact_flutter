@@ -41,7 +41,13 @@ class _NumberDetailsPageState extends State<NumberDetailsPage> {
               future: numberInfo,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Text(snapshot.data!.info);
+                  return SizedBox(
+                    width: 300,
+                    child: Text(
+                      snapshot.data!.info,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  );
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
@@ -52,5 +58,25 @@ class _NumberDetailsPageState extends State<NumberDetailsPage> {
         ),
       ),
     );
+  }
+}
+
+class NumberDetailsArguments {
+  int number;
+
+  NumberDetailsArguments(this.number);
+}
+
+class ExtractArgumentsForNumberDetailsPage extends StatelessWidget {
+  const ExtractArgumentsForNumberDetailsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as NumberDetailsArguments?;
+    if (args != null) {
+      return NumberDetailsPage(number: args.number);
+    }
+    return NumberDetailsPage();
   }
 }
