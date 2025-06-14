@@ -21,7 +21,10 @@ Future<NumberInfo> fetchRandomNumberInfo() async {
   if (response.statusCode == httpOk) {
     String info = response.body;
     RegExp exp = RegExp(r'\d+');
-    int number = int.tryParse(exp.firstMatch(info)![0] ?? '') ?? 0;
+    int? number = int.tryParse(exp.firstMatch(info)?[0] ?? '');
+    if (number == null) {
+      throw Exception('Cannot parse number from response');
+    }
     return NumberInfo(number: number, info: info);
   } else {
     throw Exception('Failed to load NumberInfo');
