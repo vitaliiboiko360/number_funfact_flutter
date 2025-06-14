@@ -34,9 +34,9 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
 
 List<Widget> _buildActions(context) {
   return [
-    IconButton(
+    TextButton.icon(
       icon: const Icon(Icons.history),
-      tooltip: "History",
+      label: const Text('History'),
       onPressed: () {
         Navigator.pushNamed(context, historyRouteName);
       },
