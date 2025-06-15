@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:number_funfact_flutter/src/fetch_data.dart';
+import 'package:number_funfact_flutter/src/history.dart';
 
 const int notInitialized = -1;
 
 class NumberDetailsPage extends StatefulWidget {
-  const NumberDetailsPage({super.key, this.number = notInitialized});
+  const NumberDetailsPage({
+    super.key,
+    this.number = notInitialized,
+    this.info = '',
+  });
 
   final int number;
+  final String info;
 
   @override
   State<NumberDetailsPage> createState() => _NumberDetailsPageState();
@@ -18,6 +24,10 @@ class _NumberDetailsPageState extends State<NumberDetailsPage> {
   @override
   void initState() {
     super.initState();
+    if (widget.info != '') {
+      numberInfo = Future.value(NumberInfo.fromString(widget.info));
+      return;
+    }
     if (widget.number == notInitialized) {
       numberInfo = fetchRandomNumberInfo();
     } else {
@@ -41,6 +51,7 @@ class _NumberDetailsPageState extends State<NumberDetailsPage> {
               future: numberInfo,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  saveToHistory(snapshot.data!);
                   return SizedBox(
                     width: 300,
                     child: Text(
@@ -63,8 +74,8 @@ class _NumberDetailsPageState extends State<NumberDetailsPage> {
 
 class NumberDetailsArguments {
   int number;
-
-  NumberDetailsArguments(this.number);
+  String info;
+  NumberDetailsArguments(this.number, this.info);
 }
 
 class ExtractArgumentsForNumberDetailsPage extends StatelessWidget {
@@ -75,6 +86,9 @@ class ExtractArgumentsForNumberDetailsPage extends StatelessWidget {
     final args =
         ModalRoute.of(context)?.settings.arguments as NumberDetailsArguments?;
     if (args != null) {
+      if (args.info != '') {
+        return NumberDetailsPage(number: args.number, info: args.info);
+      }
       return NumberDetailsPage(number: args.number);
     }
     return NumberDetailsPage();

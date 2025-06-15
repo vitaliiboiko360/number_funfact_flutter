@@ -89,7 +89,7 @@ class _NumberInputState extends State<NumberInput> {
               Navigator.pushNamed(
                 context,
                 numberDetailsRouteName,
-                arguments: NumberDetailsArguments(number),
+                arguments: NumberDetailsArguments(number, ''),
               );
             }
           },
