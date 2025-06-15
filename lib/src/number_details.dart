@@ -20,12 +20,14 @@ class NumberDetailsPage extends StatefulWidget {
 
 class _NumberDetailsPageState extends State<NumberDetailsPage> {
   late Future<NumberInfo> numberInfo;
+  bool isFromHistory = false;
 
   @override
   void initState() {
     super.initState();
     if (widget.info != '') {
       numberInfo = Future.value(NumberInfo.fromString(widget.info));
+      isFromHistory = true;
       return;
     }
     if (widget.number == notInitialized) {
@@ -51,7 +53,9 @@ class _NumberDetailsPageState extends State<NumberDetailsPage> {
               future: numberInfo,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  saveToHistory(snapshot.data!);
+                  if (isFromHistory == false) {
+                    saveToHistory(snapshot.data!);
+                  }
                   return SizedBox(
                     width: 300,
                     child: Text(
